@@ -5,6 +5,7 @@ using DesignPattern.Creational.BuilderPattern;
 using DesignPattern.Creational.Prototype;
 using DesignPattern.FactoryMethodPattern;
 using DesignPattern.SingletonPattern;
+using DesignPattern.Structutal;
 
 Console.WriteLine("Hello, World!");
 
@@ -64,5 +65,38 @@ Person2.Address = address2;
 Console.WriteLine("After change");
 Console.WriteLine("person1: " + Person1);
 Console.WriteLine("person2: " + Person2);
+
+
+// Adapter
+IVietnameseTarget client = new TranslatorAdapter(new JapaneseAdaptee());
+client.Send("Xin chào");
+
+// Bridge
+Bank vietcomBank = new VietcomBank(new CheckingAccount());
+vietcomBank.OpenAccount();
+
+Bank tpBank = new TPBank(new CheckingAccount());
+tpBank.OpenAccount();
+
+// Composite
+IFileComponent file1 = new FileLeaf("file 1", 10);
+IFileComponent file2 = new FileLeaf("file 2", 5);
+IFileComponent file3 = new FileLeaf("file 3", 12);
+
+List<IFileComponent> files = new List<IFileComponent>() { file1, file2, file3 };
+IFileComponent folder = new FolderComposite(files);
+folder.ShowProperty();
+Console.WriteLine("Total Size: " + folder.Totalsize());
+
+// Decorator
+ICar bmwCar1 = new BMWCar();
+bmwCar1.ManufactureCar();
+Console.WriteLine(bmwCar1 + "\n");
+DieselCarDecorator carWithDieselEngine = new DieselCarDecorator(bmwCar1);
+carWithDieselEngine.ManufactureCar();
+Console.WriteLine();
+ICar bmwCar2 = new BMWCar();
+PetrolCarDecorator carWithPetrolEngine = new PetrolCarDecorator(bmwCar2);
+carWithPetrolEngine.ManufactureCar();
 
 
