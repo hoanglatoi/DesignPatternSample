@@ -6,6 +6,7 @@ using DesignPattern.Creational.Prototype;
 using DesignPattern.FactoryMethodPattern;
 using DesignPattern.SingletonPattern;
 using DesignPattern.Structutal;
+using DesignPattern.Behavioral;
 
 Console.WriteLine("Hello, World!");
 
@@ -98,5 +99,70 @@ Console.WriteLine();
 ICar bmwCar2 = new BMWCar();
 PetrolCarDecorator carWithPetrolEngine = new PetrolCarDecorator(bmwCar2);
 carWithPetrolEngine.ManufactureCar();
+// Facade
+ShopFacade.getInstance().buyProductByCashWithFreeShipping("18520282@gm.uit.edu.vn");
+ShopFacade.getInstance().buyProductByPaypalWithStandardShipping("uit@gmail.edu.vn", "0123456789");
+
+// Proxy
+IVideo image = new ProxyVideo("Design Pattern.mp4");
+
+//video sẽ được load từ ổ đĩa
+image.display();
+Console.WriteLine("After loading first time\n");
+//video sẽ k tải lại từ ổ đĩa nữa
+image.display();
+
+
+// Template Method
+PDFDataMiner pdfDataMiner = new PDFDataMiner();
+pdfDataMiner.mine("pdf path");
+
+CSVDataMiner csvDataMiner = new CSVDataMiner();
+csvDataMiner.mine("csv path");
+
+// Chain of responsibility
+var chain = new ChainOfHandlers();
+Console.WriteLine("Enter quantity: ");
+int amount = Convert.ToInt32(Console.ReadLine());
+chain.Handle(amount);
+
+// Command
+Fan fan = new Fan();
+
+ICommand turnOnCommand = new TurnOnCommand(fan);
+ICommand turnOffCommand = new TurnOffCommand(fan);
+
+Remote remote = new Remote(turnOnCommand, turnOffCommand);
+
+remote.TurnOnButtonClick();
+remote.TurnOffButtonClick();
+
+// observer
+var subject = new Subject();
+var observerA = new ConcreteObserverA();
+subject.Attach(observerA);
+
+var observerB = new ConcreteObserverB();
+subject.Attach(observerB);
+
+subject.SomeBusinessLogic();
+subject.SomeBusinessLogic();
+
+subject.Detach(observerB);
+
+subject.SomeBusinessLogic();
+
+// State
+var context = new Context(new ConcreteStateA());
+context.Request1();
+context.Request2();
+
+// Strategy
+ExportContext ctx = new ExportContext(new ExportPNG());
+ctx.CreateArchive("Mushroom");
+ctx.SetStrategy(new ExportJPG());
+ctx.CreateArchive("Mushroom");
+ctx.SetStrategy(new ExportPDF());
+ctx.CreateArchive("Mushroom");
 
 
